@@ -1,50 +1,53 @@
 import random
 
 try:
-	import tkinter
+    import tkinter
 except ImportError:
-	import Tkinter as tkinter
+    import Tkinter as tkinter
 
 mainWindow = tkinter.Tk()
 
+
 # Function that create all cards from images
 def load_images(card_images):
-	suits = ['heart', 'club', 'diamond', 'spade']
-	face_cards = ['jack', 'queen', 'king']
+    suits = ['heart', 'club', 'diamond', 'spade']
+    face_cards = ['jack', 'queen', 'king']
 
-	if tkinter.TkVersion >= 8.6:
-		extension = 'png'
-	else:
-		extension = 'ppm'
+    if tkinter.TkVersion >= 8.6:
+        extension = 'png'
+    else:
+        extension = 'ppm'
 
-	# for each suit, retrieve the image for the cards
-	for suit in suits:
-		# first the number cards 1 to 10
-		for card in range(1, 11):
-			name = 'cards\{}_{}.{}'.format(str(card), suit, extension)
-			image = tkinter.PhotoImage(file=name)
-			card_images.append((card, image,))
+    # for each suit, retrieve the image for the cards
+    for suit in suits:
+        # first the number cards 1 to 10
+        for card in range(1, 11):
+            name = 'cards\{}_{}.{}'.format(str(card), suit, extension)
+            image = tkinter.PhotoImage(file=name)
+            card_images.append((card, image,))
 
-		# next the face cards
-		for card in face_cards:
-			name = 'cards\{}_{}.{}'.format(str(card), suit, extension)
-			image = tkinter.PhotoImage(file=name)
-			card_images.append((10, image,))
+        # next the face cards
+        for card in face_cards:
+            name = 'cards\{}_{}.{}'.format(str(card), suit, extension)
+            image = tkinter.PhotoImage(file=name)
+            card_images.append((10, image,))
 
 
 # Deal card function
 def deal_card(frame):
-	next_card = deck.pop()
-	tkinter.Label(frame, image=next_card[1], relief="raised").pack(side="left")
-	return next_card
+    next_card = deck.pop()
+    tkinter.Label(frame, image=next_card[1], relief="raised").pack(side="left")
+    return next_card
+
 
 # Deal function for dealer (assigned to button)
 def deal_dealer():
-	deal_card(dealer_card_frame)
+    deal_card(dealer_card_frame)
+
 
 # Deal function for player (assigned to button)
 def deal_player():
-	deal_card(player_card_frame)
+    deal_card(player_card_frame)
 
 
 mainWindow.title("Black Jack")
@@ -75,10 +78,10 @@ tkinter.Label(card_frame, textvariable=player_score_label, background="green", f
 button_frame = tkinter.Frame(mainWindow)
 button_frame.grid(row=3, column=0, columnspan=3, sticky="ew")
 
-dealer_button = tkinter.Button(button_frame, text="Dealer", command=deal_dealer )
+dealer_button = tkinter.Button(button_frame, text="Dealer", command=deal_dealer)
 dealer_button.grid(row=0, column=0)
 
-player_button = tkinter.Button(button_frame, text="Player", command=deal_player )
+player_button = tkinter.Button(button_frame, text="Player", command=deal_player)
 player_button.grid(row=0, column=1)
 
 cards = []
@@ -89,7 +92,7 @@ print(cards)
 deck = list(cards)
 random.shuffle(deck)
 
-#Create empty dealer and player hands (no cards on the begining
+# Create empty dealer and player hands (no cards on the begining
 dealer_hand = []
 player_hand = []
 
