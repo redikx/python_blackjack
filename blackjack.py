@@ -52,7 +52,7 @@ def score_hand(hand):
     return score
 
 
-# Deal function for player (assigned to button)
+
 def deal_player():
     player_hand.append(deal_card(player_card_frame))
     player_score = score_hand(player_hand)
@@ -60,8 +60,6 @@ def deal_player():
     if player_score > 21:
         resultText.set("Dealer Wins")
 
-
-mainWindow = tkinter.Tk()
 
 
 # Deal function for dealer (assigned to button)
@@ -82,15 +80,20 @@ def deal_dealer():
     else:
         resultText.set("Draw")
 
+
+def initial_deal():
+    deal_player()
+    dealer_hand.append(deal_card(dealer_card_frame))
+    dealer_score_label.set(score_hand(dealer_hand))
+    deal_player()
+
+
 def new_game():
     global dealer_card_frame
     global player_card_frame
     global dealer_hand
     global player_hand
     global deck
-
-    dealer_hand=[]
-    player_hand = []
 
     dealer_card_frame.destroy()
     dealer_card_frame = tkinter.Frame(card_frame, background="green")
@@ -107,9 +110,16 @@ def new_game():
     dealer_score_label.set(score_hand(dealer_hand))
     deal_player()
 
+
 def shuffle_deck():
     global deck
     random.shuffle(deck)
+
+def play():
+    initial_deal()
+    mainWindow.mainloop()
+
+mainWindow = tkinter.Tk()
 
 mainWindow.title("Black Jack")
 mainWindow.geometry("640x480")
@@ -148,19 +158,20 @@ dealer_button.grid(row=0, column=0)
 player_button = tkinter.Button(button_frame, text="Player", command=deal_player)
 player_button.grid(row=0, column=1)
 
-newgame_button = tkinter.Button(button_frame, text = "New Game", command = new_game)
+newgame_button = tkinter.Button(button_frame, text="New Game", command=new_game)
 newgame_button.grid(row=0, column=2)
 
 shuffle_button = tkinter.Button(button_frame, text="Shuffle", command=shuffle_deck)
 shuffle_button.grid(row=0, column=3)
 
-
 cards = []
 load_images(cards)
+
+dealer_hand = []
+player_hand = []
 
 deck = list(cards)
 random.shuffle(deck)
 
-new_game()
-
-mainWindow.mainloop()
+if __name__ == "__main__":
+    play()
